@@ -44,6 +44,9 @@ function AddCandidate(props) {
         }
         props.onCandidateAdd(candidate);
         setName('');
+        setAge(35);
+        setParty('Democratic');
+        setImageUrl('');
     }
 
     return (
