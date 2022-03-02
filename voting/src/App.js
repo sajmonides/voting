@@ -1,7 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
-import {Router, Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Navigation from './Navigation.js';
 
@@ -15,12 +15,13 @@ function App() {
         <Navigation />
       </nav>
       <main>
+        <div style={{minHeight: '20px'}}></div>
         <Routes>
           <Route path='/' element={<Voting />} />
           <Route path='/candidates' element={<Candidates />} />
         </Routes>
       </main>
-      </>
+    </>
   );
 }
 
