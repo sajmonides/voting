@@ -9,11 +9,11 @@ function Navigation() {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="/">Navbar</Navbar.Brand>
+                <Navbar.Brand href="/">Ranked Voting</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to='/'>Voting</Nav.Link>
+                        <Nav.Link as={Link} to='/'>Election</Nav.Link>
                         <Nav.Link as={Link} to="/candidates">Candidates</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

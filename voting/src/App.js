@@ -4,9 +4,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Routes, Route } from 'react-router-dom';
 
 import Navigation from './Navigation.js';
-
-import Candidates from './Candidates.js';
-import Voting from './Voting.js';
+import CandidatesPage from './CandidatesPage.js';
+import Election from './Election.js';
 
 function App() {
   return (
@@ -17,8 +16,8 @@ function App() {
       <main>
         <div style={{minHeight: '20px'}}></div>
         <Routes>
-          <Route path='/' element={<Voting />} />
-          <Route path='/candidates' element={<Candidates />} />
+          <Route path='/' element={<Election />} />
+          <Route path='/candidates' element={<CandidatesPage />} />
         </Routes>
       </main>
     </>
