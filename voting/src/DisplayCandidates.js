@@ -1,7 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Stack from 'react-bootstrap/Stack';
 
 import Candidate from './Candidate.js';
 
@@ -10,13 +9,13 @@ function DisplayCandidates(props) {
         <Container>
             <Row>
                 <Col>
-                    <Stack direction="horizontal" gap={2}>
-                    {props.candidates.map((candidate, index) => {
-                        return (
-                            <Candidate key={index} candidate={candidate} onRemoveCandidate={props.onRemoveCandidate} />
-                        );
-                    })}
-                    </Stack>
+                    <div class="candidateContainer">
+                        {props.candidates.map((candidate, index) => {
+                            return (
+                                <Candidate key={index} candidate={candidate} onRemoveCandidate={props.onRemoveCandidate} />
+                            );
+                        })}
+                    </div>
                 </Col>
             </Row>
         </Container>

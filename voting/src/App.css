@@ -41,3 +41,9 @@
     display: grid;
     row-gap: 1em;
 }
+
+.candidateContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
