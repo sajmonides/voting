@@ -14,7 +14,6 @@ function App() {
         <Navigation />
       </nav>
       <main>
-        <div style={{minHeight: '20px'}}></div>
         <Routes>
           <Route path='/' element={<Election />} />
           <Route path='/candidates' element={<CandidatesPage />} />

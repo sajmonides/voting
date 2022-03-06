@@ -10,8 +10,8 @@ function Candidate(props) {
 
     return (
         <>
-            <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" style={{height: '10rem', objectFit: 'cover'}} src={candidate.ImageUrl} />
+            <Card style={{ width: '14rem' }}>
+                <Card.Img variant="top" style={{height: '14rem', objectFit: 'cover'}} src={candidate.ImageUrl} />
                 <Card.Body>
                     <Card.Title>{candidate.Name}</Card.Title>
                     <Card.Text>

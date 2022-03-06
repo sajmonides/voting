@@ -1,7 +1,9 @@
 import AddCandidate from "./AddCandidate.js";
 import DisplayCandidates from './DisplayCandidates.js';
 
-import {useState, useEffect} from 'react';
+import Container from 'react-bootstrap/Container';
+
+import { useState, useEffect } from 'react';
 
 function Candidates() {
     const [candidates, setCandidates] = useState([]);
@@ -12,18 +14,14 @@ function Candidates() {
             const parsedCandidates = JSON.parse(localCandidates);
             setCandidates(parsedCandidates);
         }
-    },[]);
+    }, []);
 
     useEffect(() => {
         localStorage.setItem('candidates', JSON.stringify(candidates));
-    },[candidates]);
+    }, [candidates]);
 
     function handleCandidateAdd(candidate) {
         setCandidates([...candidates, candidate]);
-    }
-
-    function handleRemoveClick() {
-        setCandidates([]);
     }
 
     function handleCandidateRemove(id) {
@@ -35,11 +33,12 @@ function Candidates() {
 
     return (
         <>
-            <div className="candidatesContainer">
-                {/* <input type="button" onClick={handleRemoveClick} value="remove"></input> */}
+            <Container id="candidatesContainer" className="mt-3">
                 <AddCandidate onCandidateAdd={handleCandidateAdd} />
-                <DisplayCandidates candidates={candidates} onRemoveCandidate={handleCandidateRemove} />
-            </div>
+                <div className="mt-3">
+                    <DisplayCandidates candidates={candidates} onRemoveCandidate={handleCandidateRemove} />
+                </div>
+            </Container>
         </>
     );
 }
