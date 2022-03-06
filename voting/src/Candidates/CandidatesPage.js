@@ -1,5 +1,6 @@
 import AddCandidate from "./AddCandidate.js";
 import DisplayCandidates from './DisplayCandidates.js';
+import {RetrieveCandidates, SaveCandidates} from './StoredCandidates.js';
 
 import Container from 'react-bootstrap/Container';
 
@@ -9,15 +10,19 @@ function Candidates() {
     const [candidates, setCandidates] = useState([]);
 
     useEffect(() => {
-        const localCandidates = localStorage.getItem('candidates');
-        if (localCandidates) {
-            const parsedCandidates = JSON.parse(localCandidates);
-            setCandidates(parsedCandidates);
-        }
+        // const localCandidates = localStorage.getItem('candidates');
+        // if (localCandidates) {
+        //     const parsedCandidates = JSON.parse(localCandidates);
+        //     setCandidates(parsedCandidates);
+        // }
+
+        const localCandidates = RetrieveCandidates();
+        if (localCandidates) setCandidates(localCandidates);
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('candidates', JSON.stringify(candidates));
+        //localStorage.setItem('candidates', JSON.stringify(candidates));
+        SaveCandidates(candidates);
     }, [candidates]);
 
     function handleCandidateAdd(candidate) {
