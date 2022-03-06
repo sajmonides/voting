@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Routes, Route } from 'react-router-dom';
 
 import Navigation from './Navigation.js';
-import CandidatesPage from './CandidatesPage.js';
+import CandidatesPage from './Candidates/CandidatesPage.js';
 import Election from './Election.js';
 
 function App() {
