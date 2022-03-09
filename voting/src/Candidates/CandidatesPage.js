@@ -1,6 +1,7 @@
 import AddCandidate from "./AddCandidate.js";
 import DisplayCandidates from './DisplayCandidates.js';
 import {RetrieveCandidates, SaveCandidates} from './StoredCandidates.js';
+import DefaultCandidates from "./DefaultCandidates.js";
 
 import Container from 'react-bootstrap/Container';
 
@@ -29,11 +30,19 @@ function Candidates() {
         setCandidates(newCandidates);
     }
 
+    const handleLoadDefaultClick = () => {
+        setCandidates(DefaultCandidates);
+    }
+
     return (
         <>
-            <Container id="candidatesContainer" className="mt-3">
-                <AddCandidate onCandidateAdd={handleCandidateAdd} />
-                <div className="mt-3">
+            <Container className="mt-3">
+                <div>
+                    <AddCandidate onCandidateAdd={handleCandidateAdd} />
+                    <span className="mx-2" onClick={handleLoadDefaultClick}><u>Or load default candidates</u></span>
+                </div>
+                
+                <div id="candidatesContainer" className="mt-3">
                     <DisplayCandidates candidates={candidates} onRemoveCandidate={handleCandidateRemove} />
                 </div>
             </Container>
