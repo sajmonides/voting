@@ -7,20 +7,28 @@ import Button from 'react-bootstrap/Button';
 
 import { useEffect, useState } from 'react';
 
-function Election() {
-    const [electionCandidates, setElectionCandidates] = useState([]);
-    const [loading, setLoading] = useState(false);
+import { useWorker, WORKER_STATUS } from "@koale/useworker";
 
-    useEffect(() => {
+function Election() {
+    const [initialCandidates, setInitialCandidates] = useState([]);
+    const [resultCandidates, setResultCandidates] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [electionWorker] = useWorker(Run);
+
+    useEffect(async () => {
         const voterCount = 3000000;
-        Run(electionCandidates, voterCount).then((data) => {
-            let z = data.candidates;
-            let zz = data.voters;
-            // setElectionCandidates(data.candidates);
-            setLoading(false);
-            setElectionCandidates(data.candidates);
-        });
-    }, [electionCandidates]);
+        // Run(electionCandidates, voterCount).then((data) => {
+        //     let z = data.candidates;
+        //     let zz = data.voters;
+        //     setLoading(false);
+        //     setElectionCandidates(data.candidates);
+        // });
+        const result = await electionWorker(initialCandidates, voterCount);
+        console.log(result);
+        setResultCandidates(result.candidates);
+        setLoading(false);
+        //INFINITE LOOP
+    }, [initialCandidates]);
 
     const handleSimulateVoteClick = () => {
         const storedCandidates = RetrieveCandidates();
@@ -29,7 +37,7 @@ function Election() {
         storedCandidates.map((cand) => {
             candidates.push({ ...cand, voteCount: 0 });
         });
-        setElectionCandidates(candidates);
+        setInitialCandidates(candidates);
 
         setLoading(true);
     };
@@ -61,7 +69,7 @@ function Election() {
                 </div>
 
                 {loading && <div>Loading...</div>}
-                {!loading && electionCandidates.map((candidate, index) => {
+                {!loading && resultCandidates.map((candidate, index) => {
                     return (<>
                         {/* <div key={index}>
                         <div>{index} place</div>
