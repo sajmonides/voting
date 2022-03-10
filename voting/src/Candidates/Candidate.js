@@ -23,6 +23,10 @@ const Candidate = (props) => {
                             <label><strong>Party:&nbsp;</strong></label>
                             <span>{candidate.Party}</span>
                         </div>
+                        {candidate.voteCount && <div>
+                            <label><strong>Votes:&nbsp;</strong></label>
+                            <span>{candidate.voteCount.toLocaleString()}</span>
+                        </div>}
                     </Card.Text>
                     <Button variant="danger" onClick={() => removeCandidate(candidate.Id)}>Remove</Button>
                 </Card.Body>
