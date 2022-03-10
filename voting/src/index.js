@@ -16,6 +16,7 @@ ReactDOM.render(
   //test
   //comment
   //another comment
+  //test test
 );
 
 // If you want to start measuring performance in your app, pass a function
