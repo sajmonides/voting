@@ -23,6 +23,7 @@ function Election() {
         //     setLoading(false);
         //     setElectionCandidates(data.candidates);
         // });
+        if (initialCandidates.length == 0) return;
         const result = await electionWorker(initialCandidates, voterCount);
         console.log(result);
         setResultCandidates(result.candidates);
@@ -75,11 +76,17 @@ function Election() {
                         <div>{index} place</div>
                         <div>{candidate.Name}</div>
                         <div>Vote count: {candidate.voteCount}</div></div> */}
-                        <div className="mycard">
+                        <div className="mycard" key={index}>
+
                             <div>
                                 <span style={{color: 'white'}}>{numToString(index+1) + " place"}</span>
                             </div>
-                            <Candidate key={index} candidate={candidate} />
+                            <div>
+                                <span style={{color: 'white'}}>{candidate.Name}</span>
+                            </div>
+                            <div>
+                                <span style={{color: 'white'}}>Votes: {candidate.voteCount.toLocaleString()}</span>
+                            </div>
                         </div>
 
                     </>);

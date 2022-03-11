@@ -3,6 +3,9 @@
 const Run = async (candidates, voterCount) => {
     let voters = [];
     const candidateCount = candidates.length;
+    for (var z = 0; z < candidates.length; z++) {
+        candidates[z].Id = z;
+    }
     for (var i = 1; i <= voterCount; i++) {
         let candidateIds = [];
         let thisVoter = [];
