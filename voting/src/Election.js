@@ -16,7 +16,7 @@ function Election() {
     const [electionWorker] = useWorker(Run);
 
     useEffect(async () => {
-        const voterCount = 3000000;
+        const voterCount = 30000;
         // Run(electionCandidates, voterCount).then((data) => {
         //     let z = data.candidates;
         //     let zz = data.voters;
@@ -71,11 +71,7 @@ function Election() {
 
                 {loading && <div>Loading...</div>}
                 {!loading && resultCandidates.map((candidate, index) => {
-                    return (<>
-                        {/* <div key={index}>
-                        <div>{index} place</div>
-                        <div>{candidate.Name}</div>
-                        <div>Vote count: {candidate.voteCount}</div></div> */}
+                    return (
                         <div className="mycard" key={index}>
 
                             <div>
@@ -87,9 +83,7 @@ function Election() {
                             <div>
                                 <span style={{color: 'white'}}>Votes: {candidate.voteCount.toLocaleString()}</span>
                             </div>
-                        </div>
-
-                    </>);
+                        </div>);
                 })}
             </Container>
         </>

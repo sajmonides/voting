@@ -12,6 +12,15 @@ const Run = async (candidates, voterCount) => {
     const candidateCount = candidates.length;
     for (var z = 0; z < candidates.length; z++) {
         candidates[z].Id = z;
+        for (var g = 2; g < candidates.length + 1; g++) {
+            const choice = 'choice' + g;
+            let otherVotes = {};
+            for (var h = 0; h < candidates.length; h++) {
+                if (h == z) continue;
+                otherVotes['candidate' + h] = 0;
+            }
+            candidates[z][choice] = otherVotes;
+        }
     }
 
     for (var i = 1; i <= voterCount; i++) {
@@ -29,7 +38,13 @@ const Run = async (candidates, voterCount) => {
     }
 
     voters.map((voter) => {
-        candidates.find(c => c.Id == voter[0]).voteCount++;
+        const firstCandidate = candidates.find(c => c.Id == voter[0]);
+        firstCandidate.voteCount++;
+        voter.filter((votes, index) => index != 0).map((vote, index) => {
+            const choice = 'choice' + (index + 2);
+            const candname = 'candidate' + vote;
+            firstCandidate[choice][candname]++;
+        });
     });
 
     candidates = candidates.sort((a, b) => b.voteCount - a.voteCount);
