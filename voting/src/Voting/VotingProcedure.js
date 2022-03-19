@@ -12,16 +12,19 @@ const Run = async (candidates, voterCount) => {
     const candidateCount = candidates.length;
     for (var z = 0; z < candidates.length; z++) {
         candidates[z].Id = z;
-        for (var g = 2; g < candidates.length + 1; g++) {
-            const choice = 'choice' + g;
-            let otherVotes = {};
-            for (var h = 0; h < candidates.length; h++) {
-                if (h == z) continue;
-                otherVotes['candidate' + h] = 0;
-            }
-            candidates[z][choice] = otherVotes;
-        }
     }
+
+    candidates.map((cand) => {
+        const otherCandidates = candidates.filter(c => c.Id != cand.Id);
+        for (var choiceIndex = 2; choiceIndex < candidates.length; choiceIndex++) {
+            let otherVotes = {};
+            const choice = 'choice' + choiceIndex;
+            otherCandidates.map(o => {
+                otherVotes['candidate' + o.Id] = 0;
+            });
+            cand[choice] = otherVotes;
+        }
+    });
 
     for (var i = 1; i <= voterCount; i++) {
         let candidateIds = [];
@@ -38,21 +41,20 @@ const Run = async (candidates, voterCount) => {
     }
 
     voters.map((voter) => {
+        if (voter.length == 0) return;
         const firstCandidate = candidates.find(c => c.Id == voter[0]);
         firstCandidate.voteCount++;
-        voter.filter((votes, index) => index != 0).map((vote, index) => {
-            const choice = 'choice' + (index + 2);
-            const candname = 'candidate' + vote;
-            firstCandidate[choice][candname]++;
-        });
+
+        for (var v = 1; v < voter.length - 1; v++) {
+            const thisVote = voter[v];
+            let choice = 'choice' + (v + 1);
+            let candName = 'candidate' + thisVote;
+            firstCandidate[choice][candName]++;
+        }
     });
 
     candidates = candidates.sort((a, b) => b.voteCount - a.voteCount);
-    return {candidates, voters};
+    return {candidates};
 };
-
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-
 
 export default Run;

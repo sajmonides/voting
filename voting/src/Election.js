@@ -16,19 +16,21 @@ function Election() {
     const [electionWorker] = useWorker(Run);
 
     useEffect(async () => {
-        const voterCount = 30000;
-        // Run(electionCandidates, voterCount).then((data) => {
+        if (initialCandidates == null || initialCandidates.length == 0) return;
+        const voterCount = 30000000;
+        // Run(initialCandidates, voterCount).then((data) => {
         //     let z = data.candidates;
-        //     let zz = data.voters;
+        //     console.log(z);
+        //     setResultCandidates(data.candidates);
         //     setLoading(false);
-        //     setElectionCandidates(data.candidates);
         // });
+
         if (initialCandidates.length == 0) return;
         const result = await electionWorker(initialCandidates, voterCount);
         console.log(result);
         setResultCandidates(result.candidates);
         setLoading(false);
-        //INFINITE LOOP
+
     }, [initialCandidates]);
 
     const handleSimulateVoteClick = () => {
