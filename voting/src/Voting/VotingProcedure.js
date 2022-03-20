@@ -47,8 +47,8 @@ const Run = async (candidates, voterCount) => {
 
         for (var v = 1; v < voter.length - 1; v++) {
             const thisVote = voter[v];
-            let choice = 'choice' + (v + 1);
-            let candName = 'candidate' + thisVote;
+            const choice = 'choice' + (v + 1);
+            const candName = 'candidate' + thisVote;
             firstCandidate[choice][candName]++;
         }
     });
@@ -57,4 +57,23 @@ const Run = async (candidates, voterCount) => {
     return {candidates};
 };
 
-export default Run;
+const InstantRunOff = async (candidates) => {
+    const candidatesThatHaventLost = candidates.filter(c => c.lost == false);
+    const lastCandidate = candidatesThatHaventLost.sort((a,b) => b.voteCount - a.voteCount)[candidatesThatHaventLost.length - 1];
+    const secondChoices = lastCandidate.choice2;
+
+    candidatesThatHaventLost.map((cand) => {
+        if (cand.lost) return;
+        if (cand.Id == lastCandidate.Id) {
+            cand.lost = true;
+            return;
+        }
+        const candId = 'candidate' + cand.Id;
+        cand.voteCount += secondChoices[candId];
+    });
+
+    candidates = [...candidatesThatHaventLost];
+    return {candidates};
+};
+
+export {Run, InstantRunOff};
