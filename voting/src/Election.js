@@ -9,15 +9,43 @@ import { useEffect, useState } from 'react';
 
 import { useWorker, WORKER_STATUS } from "@koale/useworker";
 
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+const options = {
+    responsive: true,
+    plugins: {
+        legend: {
+            position: 'top',
+        },
+        title: {
+            display: true,
+            text: 'Simulated Election Results',
+        },
+    },
+};
+
+const voterCount = 3000000;
+
 function Election() {
     const [initialCandidates, setInitialCandidates] = useState([]);
     const [resultCandidates, setResultCandidates] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [chartData, setChartData] = useState([]);
     const [electionWorker] = useWorker(Run);
 
     useEffect(async () => {
         if (initialCandidates == null || initialCandidates.length == 0) return;
-        const voterCount = 3000000;
         // Run(initialCandidates, voterCount).then((data) => {
         //     let z = data.candidates;
         //     console.log(z);
@@ -32,6 +60,21 @@ function Election() {
         setLoading(false);
 
     }, [initialCandidates]);
+
+    useEffect(() => {
+        if (resultCandidates == null || resultCandidates.length == 0) return;
+        const labels = resultCandidates.map(c => c.Name);
+
+        const dataset = {
+            label: 'Election Results',
+            data: resultCandidates.map(r => r.voteCount),
+            backgroundColor: resultCandidates.map(() => '#'+(Math.random()*0xFFFFFF<<0).toString(16))
+        };
+
+        const data = {labels, datasets: [dataset]};
+        const arraydata = [data];
+        setChartData(arraydata);
+    },[resultCandidates]);
 
     const handleSimulateVoteClick = () => {
         const storedCandidates = RetrieveCandidates();
@@ -79,7 +122,7 @@ function Election() {
                 </div>
 
                 {loading && <div>Loading...</div>}
-                {!loading && resultCandidates.map((candidate, index) => {
+                {/* {!loading && resultCandidates.map((candidate, index) => {
                     return (
                         <div className="mycard" key={index}>
 
@@ -93,8 +136,10 @@ function Election() {
                                 <span style={{color: 'white'}}>Votes: {candidate.voteCount.toLocaleString()}</span>
                             </div>
                         </div>);
+                })} */}
+                {chartData.length > 0 && chartData.map((c, index) => {
+                    return <Bar key={index} options={options} data={c} />
                 })}
-
                 <div>
                     <Button type="primary" onClick={handleInstantRunOffClick}>Instant Runoff</Button>
                 </div>
